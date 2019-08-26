@@ -376,8 +376,9 @@ Even after doing `2to3 -w .`, there were issues with imports.
 mxnet.base.MXNetError: [14:32:09] src/c_api/c_api_ndarray.cc:392: Operator _zeros cannot be run; requires at least one of FCompute<xpu>, NDArrayFunction, FCreateOperator be registered
 ```
 
-### Using tag `0.10.0`
+### Using tag `v0.10.0`
 
+Commit `89de7ab` not found for cub. Clone branch `master` instead.
 
 Error in mshadow.
 ```
@@ -386,7 +387,15 @@ mshadow/mshadow/././half.h(19): error: class "__half" has no member "x"
 
 Tried adding `make ... NVCC_FLAGS="-D__CUDA_NO_HALF_OPERATORS__"`. This did not help.
 
-Tried updating `mshadow` to `master`. This seemed to work! But then I obtained an error from `dmlc`, and updating did not seem to fix it.
+Tried updating `mshadow` to branch `master`. This seemed to work!
+
+But then I obtained an error from `dmlc`, and updating did not seem to fix it:
+```
+In file included from src/operator/custom/native_op.cc:7:0:
+src/operator/custom/./native_op-inl.h: In member function ‘virtual void mxnet::op::NativeOp<xpu>::SyncVec(const std::vector<mxnet::TBlob>&, const string&, mshadow::Stream<Device>*, int)’:
+src/operator/custom/./native_op-inl.h:146:66: error: no matching function for call to ‘std::vector<unsigned int*>::push_back(mxnet::index_t*)’
+       shapes.push_back(const_cast<index_t*>(vec[i].shape_.data()));
+```
 
 ### Follow instructions from Deformable Conv-Nets
 
