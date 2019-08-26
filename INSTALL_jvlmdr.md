@@ -3,6 +3,8 @@
 ```
 git clone https://github.com/jvlmdr/Flow-Guided-Feature-Aggregation.git
 git clone https://github.com/apache/incubator-mxnet.git
+FGFA_ROOT=$(pwd)/Flow-Guided-Feature-Aggregation
+MXNET_ROOT=$(pwd)/incubator-mxnet
 ```
 
 Set up environment with python 2
@@ -18,7 +20,7 @@ pip install easydict
 
 Build and install mxnet. Commit `77a633f` was master at time of writing. It was important to use `pip install -e .` to preserve the path to libmxnet (there may be better ways of doing this).
 ```
-cd incubator-mxnet
+cd ${MXNET_ROOT}
 git checkout 77a633f
 git submodule update --init --recursive
 cp -r ${FGFA_ROOT}/fgfa_rfcn/operator_cxx/* ${MXNET_ROOT}/src/operator/contrib/
@@ -29,7 +31,7 @@ pip install -e .
 
 Build and run FGFA. Download model and store in `model/`.
 ```
-cd Flow-Guided-Feature-Aggregation
+cd ${FGFA_ROOT}
 bash ./init.sh
 python ./fgfa_rfcn/demo.py
 ```
